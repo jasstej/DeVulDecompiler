@@ -1,0 +1,86 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #F8F9FA;
+}
+
+header a {
+    color: #000000;
+    text-decoration: none;
+}
+
+header h1 {
+    font-size: 1.5rem;
+}
+
+.page-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.page-title img {
+    padding: 0 10px;
+}
+
+#queue-url {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+#queue-url:hover, #queue-url:active, #queue-url:focus {
+    text-decoration: underline;
+}
+
+section#content {
+    padding-bottom: 40px;
+}
+
+section#input h3 {
+    font-size: 1.2rem;
+}
+
+section#decompilers {
+    max-width: 100%;
+    padding: 0 20px;
+}
+
+footer {
+    background: #F8F9FA;
+}
+
+button.btn {
+    background-color: #E9ECEF;
+    font-size: 0.875rem;
+    padding: 0.25em;
+    border: 1px solid #ced4da;
+}
+
+.decompiler {
+    min-width: 300px;
+    min-height: 300px;
+}
+
+.decompiler.with_line {
+    border-left: 1px solid #000000;
+}
+
+.decompiler.hidden {
+    display: none !important;
+}
+
+.decompiler_title {
+    color: #000000;
+    text-decoration: none;
+}
+
+.decompiler_rerun {
+    font-size: 1rem;
+    color: #000000;
+    cursor: pointer;
+}

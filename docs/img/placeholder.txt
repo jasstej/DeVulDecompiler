@@ -1,0 +1,3 @@
+Place screenshots here:
+- homepage-3-pane.png
+- homepage-4-pane.png

@@ -1,0 +1,143 @@
+{% load rest_framework %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    <title>DeVul's Decompiler</title>
+    <meta name="description" content="DeVul's Decompiler by DeVul Reaper – a tool for exploring binaries.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+        <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <meta property="og:site_name" content="DeVul's Decompiler">
+    <meta property="og:title" content="DeVul's Decompiler">
+    <meta property="og:description" content="DeVul's Decompiler by DeVul Reaper – a tool for exploring binaries.">
+    <meta property="og:image" content="{% static 'img/devul-favicon-192x192.png' %}">
+
+        <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@devulreaper">
+    <meta name="twitter:creator" content="@devulreaper">
+    <meta name="twitter:title" content="DeVul's Decompiler">
+    <meta name="twitter:description" content="DeVul's Decompiler by DeVul Reaper – a tool for exploring binaries.">
+    <meta property="twitter:image" content="{% static 'img/devul-favicon-192x192.png' %}">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/devul-apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/devul-favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/devul-favicon-16x16.png' %}">
+        <link rel="manifest" href="/static/site.webmanifest">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ace.min.js" type="text/javascript" charset="utf-8"></script>
+
+        {% csrf_token %}
+
+        {{ decompilers_json|json_script:"decompilers_json" }}
+    </head>
+<body>
+<div class="d-flex flex-column h-100" id="main">
+    <header>
+        <div class="container my-3">
+            <div class="row align-items-center">
+                <div class="col-md-9">
+                    <a class="page-title" href="{% url 'explorer:index' %}">
+                        <img alt="DeVul Logo" src="{% static 'img/devul-logo-small.png' %}">
+                        <h1 class="my-0">DeVul's Decompiler</h1>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <div class="float-end text-end small text-muted">
+                        <div><a href="{% url 'explorer:faq' %}">What is this?</a></div>
+                        <div>Note: angr may take several minutes.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% if show_banner %}
+    <section id="banner" class="container-fluid mb-5 text-light bg-dark">
+        <div class="row py-2 px-4">
+            <span>
+                Welcome visitors! We are experiencing a lot of load, sorry if the service is unavailable when you stop by. In the meantime, check out one of the already generated results in the "Samples" section, or
+                <a id="queue-url" href="{% url 'explorer:queue' %}" title="View queue details">
+                    check the queue to see the wait time.
+                </a>
+            </span>
+        </div>
+    </section>
+    {% endif %}
+    <section id="input" class="container">
+        <div class="row my-3">
+            <div class="col-md-6">
+                <h3>Upload File</h3>
+                <p>Your file must be <strong>less than 2MB</strong> in size. Uploaded binaries <a href="{% url 'explorer:faq' %}#">are retained</a>.
+                </p>
+                <form class="input-group" id="binary_upload_form">
+                    <input type="file" class="form-control form-control-sm input-group-append" id="file" name="file" value required>
+                </form>
+            </div>
+            <div class="col-md-6"
+            {% if featured_binaries|length == 0 %}
+                style="display:none"
+            {% endif %}
+            >
+                <h3>Samples</h3>
+                <p>Or check out one of these samples we've provided:</p>
+                <form class="input-group" id="sample_form">
+                    <select name="samples" id="samples" class="form-select form-select-sm input-group-append">
+                        <option value="">Select a Sample...</option>
+                        {% for b in featured_binaries %}
+                        <option value="{{ b.id }}">{{ b.featured_name }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section id="decompilers" class="container flex-grow-1 d-flex flex-column">
+        <div class="row" id="decompiler_selectors">
+            {% for d in decompilers %}
+            <div class="col-xl col-lg-2 col-md-3 col-sm-4">
+                <label class="decompiler_selector" for="select_{{ d.name }}">
+                    <input type="checkbox" class="decompiler_select" id="select_{{ d.name }}">
+                    {{ d.name }}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row my-3 flex-grow-1" id="decompilers">
+            {% for d in decompilers %}
+            <div class="col d-flex flex-column decompiler decompiler_container" id="container_{{ d.name }}">
+                <div class="row">
+                    <h5 class="d-inline-block">
+                        <a class="decompiler_title" data-umami-event="url_{{ d.name }}" id="title_{{ d.name }}" title="Website for {{ d.name }}" target="_blank" href="{{ d.url }}">{{ d.name }}</a>
+                        <a class="decompiler_rerun" id="rerun_{{ d.name }}" title="Re-run decompilation" hidden><i class='fas fa-redo'></i></a>
+                    </h5>
+                    <div class="decompiler_version" id="version_{{ d.name }}"></div>
+                </div>
+                <div class="row flex-grow-1">
+                    <div id="{{d.name}}" class="decompiler_output"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="row justify-content-between text-center my-2">
+                <p class="mb-0 small">Powered by DeVul's Decompiler • Crafted by DeVul Reaper</p>
+            </div>
+        </div>
+    </footer>
+</div>
+<script src="{% static 'js/index.js' %}"></script>
+<script async defer data-website-id="e8f5e886-a15e-4aca-9e17-4ebed158a438" src="https://stats.ext.v35.us/yummi.js"></script>
+</body>
+</html>

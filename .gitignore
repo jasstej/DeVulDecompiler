@@ -1,0 +1,11 @@
+db.sqlite3
+uploads
+config
+.venv
+db_data
+secrets
+letsencrypt
+.vscode
+media
+staticfiles
+__pycache__

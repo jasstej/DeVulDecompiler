@@ -1,4 +1,4 @@
-import datetime
+git remote -vimport datetime
 from logging import getLogger
 
 from django.forms import model_to_dict

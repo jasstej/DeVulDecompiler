@@ -5,22 +5,33 @@ This guide shows how to set up, start, restart, and troubleshoot DeVul locally u
 ## Prerequisites
 - Docker and Docker Compose plugin installed
 - Internet access for image builds
+- Python 3.10+ and Pipenv (only if running the helper script on the host). Otherwise use the Docker-only init below.
 
 ## One-time initialization
+From the repo root, pick ONE of the following:
+
+Option A — Host (Pipenv):
 ```zsh
-# From the repo root
 pipenv install
-python scripts/dce.py init
+pipenv run python scripts/dce.py init
 ```
-This creates required secrets and local data folders.
+
+Option B — Docker-only (no Pipenv on host):
+```zsh
+docker compose -f docker-compose.yml -f docker-compose.dev.yml run --rm explorer python scripts/dce.py init
+```
 
 ## Start the stack (dev)
-Start core services and open-source runners:
+Start core services:
 ```zsh
 docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d explorer database memcached
-# Start runners (pick any)
+```
+
+Start runners (pick any subset; see docker-compose.dev.yml for all available service names):
+```zsh
 docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d angr snowman retdec ghidra
 ```
+
 Visit http://127.0.0.1:8000
 
 Admin login (auto-created on first boot) shows in explorer service logs:
@@ -64,6 +75,7 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d angr snowma
     docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
     docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d explorer
     ```
+
 - PermissionError during collectstatic (staticfiles):
   - Fix host dir perms:
     ```zsh
@@ -71,6 +83,7 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d angr snowma
     sudo chmod -R u+rwX,g+rwX staticfiles media
     docker compose -f docker-compose.yml -f docker-compose.dev.yml restart explorer
     ```
+
 - Runners not appearing in UI:
   - Check API:
     ```zsh
@@ -80,6 +93,7 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d angr snowma
     ```zsh
     docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f angr
     ```
+
 - angr timeouts on large binaries:
   - Increase angr runner timeout:
     ```zsh
@@ -94,7 +108,7 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d angr snowma
 
 ## Updating static/branding
 - Static assets are under `static/`; templates under `templates/`.
-- After changes, restart explorer:
+- After changes, restart explorer and hard-refresh the browser:
 ```zsh
 docker compose -f docker-compose.yml -f docker-compose.dev.yml restart explorer
 ```
@@ -103,4 +117,3 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml restart explorer
 - Explorer logs: `docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f explorer`
 - Runner logs: `docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f <runner>`
 - API endpoints: `/api/`, `/api/decompilers/`, `/api/binaries/`
-

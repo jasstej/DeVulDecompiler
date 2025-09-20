@@ -26,6 +26,17 @@ header h1 {
 
 .page-title img {
     padding: 0 10px;
+    height: 36px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Ensure logo remains sensible on small screens */
+@media (max-width: 576px) {
+    .page-title img {
+        height: 28px;
+    }
 }
 
 #queue-url {

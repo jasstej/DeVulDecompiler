@@ -1,6 +1,6 @@
-# DeVul's Decompiler — Getting Started
+# DeVul — Getting Started
 
-This guide shows how to set up, start, restart, and troubleshoot the project locally using Docker Compose.
+This guide shows how to set up, start, restart, and troubleshoot DeVul locally using Docker Compose.
 
 ## Prerequisites
 - Docker and Docker Compose plugin installed
@@ -23,9 +23,9 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d angr snowma
 ```
 Visit http://127.0.0.1:8000
 
-Admin login (auto-created on first boot) shows in explorer container logs:
+Admin login (auto-created on first boot) shows in explorer service logs:
 ```zsh
-docker logs decompiler-explorer-explorer-1 | sed -n '/Successfully created admin user/,+4p'
+docker compose -f docker-compose.yml -f docker-compose.dev.yml logs --since=10m explorer | sed -n '/Successfully created admin user/,+4p'
 ```
 
 ## Verify decompilers
@@ -76,9 +76,9 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d angr snowma
     ```zsh
     curl -fsS http://127.0.0.1:8000/api/decompilers/
     ```
-  - Tail runner logs (replace name):
+  - Tail runner logs (replace service name):
     ```zsh
-    docker logs -f decompiler-explorer-angr-1
+    docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f angr
     ```
 - angr timeouts on large binaries:
   - Increase angr runner timeout:
@@ -100,7 +100,7 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml restart explorer
 ```
 
 ## Where to look
-- Explorer logs: `docker logs -f decompiler-explorer-explorer-1`
-- Runner logs: `docker logs -f decompiler-explorer-<runner>-1`
+- Explorer logs: `docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f explorer`
+- Runner logs: `docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f <runner>`
 - API endpoints: `/api/`, `/api/decompilers/`, `/api/binaries/`
 

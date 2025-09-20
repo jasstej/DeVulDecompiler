@@ -4,22 +4,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DeVul's Decompiler - Queue</title>
-    <meta name="description" content="DeVul's Decompiler by DeVul Reaper – a tool for exploring binaries.">
+    <title>DeVul — Queue</title>
+    <meta name="description" content="DeVul — Compare decompiler outputs side by side.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="/queue">
-    <meta property="og:site_name" content="DeVul's Decompiler">
-    <meta property="og:title" content="DeVul's Decompiler - Queue">
-    <meta property="og:description" content="DeVul's Decompiler by DeVul Reaper – a tool for exploring binaries.">
+    <meta property="og:site_name" content="DeVul">
+    <meta property="og:title" content="DeVul — Queue">
+    <meta property="og:description" content="DeVul — Compare decompiler outputs side by side.">
     <meta property="og:image" content="{% static 'img/devul-favicon-192x192.png' %}">
 
 	<meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@devulreaper">
-    <meta name="twitter:creator" content="@devulreaper">
-    <meta name="twitter:title" content="DeVul's Decompiler - Queue">
-    <meta name="twitter:description" content="DeVul's Decompiler by DeVul Reaper – a tool for exploring binaries.">
+    
+    <meta name="twitter:title" content="DeVul — Queue">
+    <meta name="twitter:description" content="DeVul — Compare decompiler outputs side by side.">
     <meta property="twitter:image" content="{% static 'img/devul-favicon-192x192.png' %}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,11 +36,14 @@
                 <div class="col-md-9">
                     <a class="page-title" href="{% url 'explorer:index' %}">
                         <img alt="DeVul Logo" src="{% static 'img/devul-logo-small.png' %}">
-                        <h1 class="my-0">DeVul's Decompiler</h1>
+                        <h1 class="my-0">DeVul</h1>
                     </a>
                 </div>
                 <div class="col-md-3">
-                    <a href="{% url 'explorer:faq' %}" class="float-end">What is this?</a>
+                    <div class="float-end small text-muted">
+                        <div><a href="{% url 'explorer:faq' %}">What is this?</a></div>
+                        <div><a href="https://github.com/jasstej/DeVulDecompiler" target="_blank" rel="noopener">GitHub</a></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,12 +58,11 @@
     <footer class="fixed-bottom">
         <div class="container">
             <div class="row justify-content-between text-center my-2">
-                <p class="mb-0 small">Powered by DeVul's Decompiler • Crafted by DeVul Reaper</p>
+                <p class="mb-0 small">© 2025 DeVul • <a href="https://github.com/jasstej/DeVulDecompiler" target="_blank" rel="noopener">github.com/jasstej/DeVulDecompiler</a></p>
             </div>
         </div>
     </footer>
 </div>
 <script src="{% static 'js/queue.js' %}"></script>
-<script async defer data-website-id="e8f5e886-a15e-4aca-9e17-4ebed158a438" src="https://stats.ext.v35.us/yummi.js"></script>
 </body>
 </html>

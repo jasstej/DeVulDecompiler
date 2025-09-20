@@ -15,6 +15,7 @@ django-storages = {extras = ["s3"], version = "~=1.13"}
 
 [dev-packages]
 django-debug-toolbar = "~=3.8.1"
+pillow = "~=10.4"
 
 [requires]
 python_version = ">=3.8"

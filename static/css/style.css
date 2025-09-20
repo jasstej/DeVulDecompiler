@@ -6,11 +6,11 @@ html, body {
 }
 
 header {
-    background: #F8F9FA;
+    background: #0b1020;
 }
 
 header a {
-    color: #000000;
+    color: #e5e7eb;
     text-decoration: none;
 }
 
@@ -29,7 +29,7 @@ header h1 {
 }
 
 #queue-url {
-    color: #ffffff;
+    color: #93c5fd;
     text-decoration: underline;
 }
 
@@ -51,7 +51,7 @@ section#decompilers {
 }
 
 footer {
-    background: #F8F9FA;
+    background: #0b1020;
 }
 
 button.btn {
@@ -67,7 +67,7 @@ button.btn {
 }
 
 .decompiler.with_line {
-    border-left: 1px solid #000000;
+    border-left: 1px solid #1f2937;
 }
 
 .decompiler.hidden {
@@ -75,12 +75,12 @@ button.btn {
 }
 
 .decompiler_title {
-    color: #000000;
+    color: #111827;
     text-decoration: none;
 }
 
 .decompiler_rerun {
     font-size: 1rem;
-    color: #000000;
+    color: #374151;
     cursor: pointer;
 }

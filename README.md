@@ -1,8 +1,8 @@
-# DeVul's Decompiler
+# DeVul
 
-DeVul's Decompiler is a web front-end to a number of [decompilers](/runners/decompiler). This web service lets you compare the output of different decompilers on small executables. Inspiration: Matt Godbolt's excellent [Compiler Explorer](https://github.com/compiler-explorer/compiler-explorer).
+DeVul is a web frontend to multiple [decompilers](/runners/decompiler). It lets you compare outputs of different engines on small executables, side by side.
 
-This instance is maintained by DeVul Reaper and is a rebrand of the open-source Decompiler Explorer by Vector 35 Inc (MIT License). See LICENSE.txt for details.
+Project repo: https://github.com/jasstej/DeVulDecompiler
 
 
 ![Decompiler Explorer](/static/img/preview.png)

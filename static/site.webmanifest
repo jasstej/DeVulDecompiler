@@ -1,6 +1,6 @@
 {
-	"name": "DeVul's Decompiler",
-	"short_name": "Decompiler",
+	"name": "DeVul",
+	"short_name": "DeVul",
 	"icons": [
 		{
 			"src": "/static/img/devul-favicon-192x192.png",
@@ -8,7 +8,7 @@
 			"type": "image/png"
 		}
 	],
-	"theme_color": "#000000",
-	"background_color": "#ffffff",
+	"theme_color": "#111827",
+	"background_color": "#0b1020",
 	"display": "standalone"
 }

@@ -3,9 +3,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>About DeVul's Decompiler</title>
+  <title>About DeVul</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <meta name="description" content="DeVul's Decompiler is an open-source multi-engine decompiler hub, maintained by DeVul Reaper.">
+  <meta name="description" content="DeVul is a multi-engine decompiler hub.">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/devul-favicon-32x32.png' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,9 +16,9 @@
     <div class="container my-3">
       <div class="row align-items-center">
         <div class="col-md-9">
-          <a class="page-title" href="{\% url 'explorer:index' %}">
+          <a class="page-title" href="{% url 'explorer:index' %}">
             <img alt="DeVul Logo" src="{% static 'img/devul-logo-small.png' %}">
-            <h1 class="my-0">DeVul's Decompiler</h1>
+            <h1 class="my-0">DeVul</h1>
           </a>
         </div>
         <div class="col-md-3 text-end">
@@ -28,19 +28,19 @@
     </div>
   </header>
   <section class="container my-4">
-    <h3>About DeVul's Decompiler</h3>
-    <p>DeVul's Decompiler is an open-source multi-engine decompiler hub, maintained by DeVul Reaper.</p>
+    <h3>About DeVul</h3>
+    <p>DeVul is a multi-engine decompiler hub.</p>
     <p>It lets you compare output from multiple decompilers side by side.</p>
     <p>
       Useful links:
       <a href="{% url 'explorer:faq' %}">FAQ</a> •
-      <a href="https://github.com/decompiler-explorer/decompiler-explorer" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <a href="https://github.com/jasstej/DeVulDecompiler" target="_blank" rel="noopener noreferrer">GitHub</a>
     </p>
   </section>
   <footer class="mt-auto">
     <div class="container">
       <div class="row justify-content-between text-center my-2">
-        <p class="mb-0 small">Powered by DeVul's Decompiler • Crafted by DeVul Reaper</p>
+  <p class="mb-0 small">© 2025 DeVul • <a href="https://github.com/jasstej/DeVulDecompiler" target="_blank" rel="noopener">github.com/jasstej/DeVulDecompiler</a></p>
       </div>
     </div>
   </footer>

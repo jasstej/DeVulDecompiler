@@ -5,7 +5,6 @@ DeVul is a web frontend to multiple [decompilers](/runners/decompiler). It lets 
 Project repo: https://github.com/jasstej/DeVulDecompiler
 
 
-![Decompiler Explorer](/static/img/preview.png)
 
 ## Prerequisites
 

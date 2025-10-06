@@ -23,6 +23,7 @@ RUN mkdir media staticfiles
 
 COPY manage.py .
 COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 COPY templates templates
 COPY static static
 COPY decompiler_explorer decompiler_explorer
@@ -32,4 +33,4 @@ ENTRYPOINT [ "./entrypoint.sh" ]
 
 EXPOSE 8000
 
-CMD ["/bin/sh", "-lc", "gunicorn --capture-output -w 4 --bind 0.0.0.0:${PORT:-8000} decompiler_explorer.wsgi"]
+CMD ["gunicorn", "--capture-output", "-w", "4", "--bind", "0.0.0.0:8000", "decompiler_explorer.wsgi"]

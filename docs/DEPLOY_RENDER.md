@@ -6,7 +6,7 @@ This repo includes a `render.yaml` so you can spin up a hosted instance on Rende
 - Web service running Django + Gunicorn in Docker
 - Managed Postgres database (Render)
 - Private Memcached service for caching
-- Post-deploy hooks to run migrations and collectstatic
+- Automated migrations and collectstatic executed by the container entrypoint
 
 ## One‑time setup
 1. Push this repository to GitHub (private or public).
@@ -38,10 +38,12 @@ Optional for S3-compatible storage (recommended for large media):
 
 ## Deploy flow
 - Build uses the repo `Dockerfile`.
-- Entrypoint runs health checks, then on Render the `postdeploy` commands run:
-  - `python manage.py migrate`
-  - `python manage.py collectstatic --noinput`
-- Service starts Gunicorn and listens on `$PORT`.
+- On container start, `entrypoint.sh` will:
+  - run Django system checks with retries
+  - run `manage.py migrate`
+  - run `manage.py collectstatic --noinput`
+  - ensure an admin account exists
+  - start Gunicorn and listen on `$PORT`
 
 ## Notes on decompiler runners
 This blueprint deploys only the web app, DB, and cache. The heavy decompiler runner containers (angr, Snowman, RetDec, etc.) are not included by default as they are CPU/memory intensive on PaaS.

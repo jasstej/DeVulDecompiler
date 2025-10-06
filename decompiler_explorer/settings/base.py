@@ -22,25 +22,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-secrets_file = BASE_DIR / 'config'
-if secrets_file.exists():
-    secrets_config = json.loads(secrets_file.read_text())
-else:
-    secrets_config = {
-        'SECRET_KEY': secrets.token_hex(32),
-    }
-    secrets_file.touch(0o600)
-    secrets_file.write_text(json.dumps(secrets_config, indent=4))
-
-SECRET_KEY = secrets_config['SECRET_KEY']
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    secrets_file = BASE_DIR / 'config'
+    if secrets_file.exists():
+        secrets_config = json.loads(secrets_file.read_text())
+    else:
+        secrets_config = {
+            'SECRET_KEY': secrets.token_hex(32),
+        }
+        secrets_file.touch(0o600)
+        secrets_file.write_text(json.dumps(secrets_config, indent=4))
+    SECRET_KEY = secrets_config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', '0') == '1'
+_env_debug = os.environ.get('DEBUG') or os.environ.get('DJANGO_DEBUG') or '0'
+DEBUG = str(_env_debug).lower() in ('1', 'true', 'yes', 'on')
 
 
-ALLOWED_HOSTS = [
-    '*'
-]
+_allowed_hosts = os.environ.get('ALLOWED_HOSTS')
+if _allowed_hosts:
+    ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split(',') if h.strip()]
+else:
+    ALLOWED_HOSTS = [
+        '*'
+    ]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 

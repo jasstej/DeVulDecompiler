@@ -30,7 +30,6 @@ services:
       - key: DJANGO_DEBUG
         value: "False"
     healthCheckPath: /api/decompilers/
-    postDeployCommand: "pipenv run python manage.py migrate && pipenv run python manage.py collectstatic --noinput"
 
   - type: pserv
     name: dce-memcached

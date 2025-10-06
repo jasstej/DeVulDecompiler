@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
 
 from rest_framework import routers
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
@@ -34,7 +35,8 @@ urlpatterns = [
     path('', include('explorer.urls')),
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('api/queue', views.QueueView.as_view(renderer_classes=[JSONRenderer, BrowsableAPIRenderer]))
+    path('api/queue', views.QueueView.as_view(renderer_classes=[JSONRenderer, BrowsableAPIRenderer])),
+    path('healthz', lambda request: JsonResponse({"status": "ok"}))
 ]
 
 

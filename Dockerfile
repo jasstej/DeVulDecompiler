@@ -32,4 +32,4 @@ ENTRYPOINT [ "./entrypoint.sh" ]
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--capture-output", "-w", "4", "--bind", "0.0.0.0:8000", "decompiler_explorer.wsgi"]
+CMD ["/bin/sh", "-lc", "gunicorn --capture-output -w 4 --bind 0.0.0.0:${PORT:-8000} decompiler_explorer.wsgi"]

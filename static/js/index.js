@@ -299,23 +299,41 @@ function uploadBinary() {
         method: 'POST',
         body: formData,
         headers: {'X-CSRFToken': csrfToken},
-        mode: 'same-origin'
+        mode: 'same-origin',
+        credentials: 'same-origin'
     })
     .then(async(resp) => {
         if (resp.ok) {
             return resp.json();
         }
-        else {
-            if (resp.status == 413) {
-                throw Error("File too large");
-            }
-            if (resp.status == 429) {
-                throw Error((await resp.json())['detail']);
-            }
-            else {
-                throw Error("Error uploading binary");
+        const status = resp.status;
+        if (status === 413) {
+            throw Error("File too large");
+        }
+        if (status === 429) {
+            try {
+                const data = await resp.json();
+                throw Error(data['detail'] || "Too many requests");
+            } catch (e) {
+                throw Error("Too many requests");
             }
         }
+        let message = `Error uploading binary (HTTP ${status})`;
+        try {
+            const data = await resp.json();
+            if (data && data.detail) {
+                message += `: ${data.detail}`;
+            }
+        } catch (e) {
+            try {
+                const text = await resp.text();
+                if (text) message += `: ${text.substring(0, 200)}`;
+            } catch (_e) {}
+        }
+        if (status === 403) {
+            message += " — possible CSRF issue. Make sure cookies are sent and CSRF_TRUSTED_ORIGINS includes your site.";
+        }
+        throw Error(message);
     })
     .then(data => {
         addHistoryEntry(data['id']);
@@ -343,11 +361,23 @@ function rerunDecompiler(decompiler_name) {
     fetch(decompilerResultUrls[decompiler_name] + 'rerun/', {
         method: 'POST',
         headers: {'X-CSRFToken': csrfToken},
-        mode: 'same-origin'
+        mode: 'same-origin',
+        credentials: 'same-origin'
     })
-    .then(resp => {
+    .then(async (resp) => {
         if (!resp.ok) {
-            throw Error("Error rerunning binary");
+            const status = resp.status;
+            let message = `Error rerunning binary (HTTP ${status})`;
+            try {
+                const data = await resp.json();
+                if (data && data.detail) message += `: ${data.detail}`;
+            } catch (e) {
+                try {
+                    const text = await resp.text();
+                    if (text) message += `: ${text.substring(0, 200)}`;
+                } catch(_e) {}
+            }
+            throw Error(message);
         }
     })
     .then(() => {

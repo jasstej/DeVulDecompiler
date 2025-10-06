@@ -50,6 +50,15 @@ else:
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Trust specific origins for CSRF when running behind HTTPS proxies (e.g., Render)
+_csrf_trusted = os.environ.get('CSRF_TRUSTED_ORIGINS')
+if _csrf_trusted:
+    CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_trusted.split(',') if o.strip()]
+
+# Secure cookies in non-debug environments
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+
 
 # Application definition
 

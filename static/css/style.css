@@ -1,3 +1,38 @@
+/*
+    Theme variables — tune these to match the logo palette
+    Primary palette is derived from existing branding assets (deep navy + sky blue accent).
+*/
+:root {
+    /* Core brand palette (provided) */
+    --brand-electric: #A33CE1; /* Electric Purple */
+    --brand-cyan:     #28E0F4; /* Cyan Blue */
+    --brand-violet:   #7A2EC7; /* Violet */
+    --brand-teal:     #145B6E; /* Deep Teal */
+    --brand-pink:     #E62F8A; /* Neon Pink */
+    --brand-orange:   #FF9A2E; /* Bright Orange */
+    --brand-navy:     #0C0F1A; /* Dark Navy / Black */
+
+    /* Derived UI tokens */
+    --brand-bg-dark: var(--brand-navy);      /* header/footer background */
+    --brand-on-dark: #E9EBF0;                /* near-white for contrast on dark */
+    --brand-surface: #FFFFFF;                /* page background / cards */
+    --brand-text:    #0C0F1A;                /* primary text on light (navy) */
+    --brand-muted:   var(--brand-teal);      /* subdued text/icons */
+    --brand-divider: var(--brand-teal);      /* dividers on light */
+    --brand-accent:  var(--brand-cyan);      /* primary accent */
+    --brand-accent-hover: var(--brand-pink); /* hover/active accent */
+    --brand-border-light: #ced4da;           /* neutral border (inputs/buttons) */
+    --brand-btn-bg:  #E9ECEF;                /* neutral button background */
+}
+
+/* Subtle electric glow on the page background */
+html, body {
+    background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(163, 60, 225, 0.18), transparent 60%),
+        radial-gradient(800px 400px at 95% 10%, rgba(230, 47, 138, 0.10), transparent 60%),
+        var(--brand-surface);
+    color: var(--brand-text);
+}
 html, body {
     width: 100%;
     height: 100%;
@@ -6,11 +41,11 @@ html, body {
 }
 
 header {
-    background: #0b1020;
+    background: var(--brand-bg-dark);
 }
 
 header a {
-    color: #e5e7eb;
+    color: var(--brand-on-dark);
     text-decoration: none;
 }
 
@@ -40,7 +75,7 @@ header h1 {
 }
 
 #queue-url {
-    color: #93c5fd;
+    color: var(--brand-accent);
     text-decoration: underline;
 }
 
@@ -48,9 +83,7 @@ header h1 {
     text-decoration: underline;
 }
 
-section#content {
-    padding-bottom: 40px;
-}
+section#content { padding-bottom: 40px; }
 
 section#input h3 {
     font-size: 1.2rem;
@@ -62,14 +95,36 @@ section#decompilers {
 }
 
 footer {
-    background: #0b1020;
+    background: var(--brand-bg-dark);
 }
 
 button.btn {
-    background-color: #E9ECEF;
+    background-color: var(--brand-btn-bg);
     font-size: 0.875rem;
     padding: 0.25em;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--brand-border-light);
+}
+
+/* Primary CTA button using Bright Orange */
+.btn.btn-primary,
+button.btn-primary,
+a.btn.btn-primary {
+    color: #0C0F1A; /* dark text for contrast on orange */
+    background: var(--brand-orange);
+    border: 1px solid var(--brand-orange);
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    transition: box-shadow 120ms ease, transform 80ms ease, filter 120ms ease;
+}
+.btn.btn-primary:hover,
+button.btn-primary:hover,
+a.btn.btn-primary:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 0 0 3px rgba(255, 154, 46, 0.25), 0 0 22px rgba(255, 154, 46, 0.35);
+}
+.btn.btn-primary:active,
+button.btn-primary:active,
+a.btn.btn-primary:active {
+    transform: translateY(1px);
 }
 
 .decompiler {
@@ -78,7 +133,7 @@ button.btn {
 }
 
 .decompiler.with_line {
-    border-left: 1px solid #1f2937;
+    border-left: 1px solid var(--brand-divider);
 }
 
 .decompiler.hidden {
@@ -86,12 +141,83 @@ button.btn {
 }
 
 .decompiler_title {
-    color: #111827;
+    color: var(--brand-text);
     text-decoration: none;
 }
 
 .decompiler_rerun {
     font-size: 1rem;
-    color: #374151;
+    color: var(--brand-muted);
     cursor: pointer;
+}
+
+/* Global link styling on light surfaces */
+a { color: var(--brand-accent); }
+a:hover, a:focus { color: var(--brand-accent-hover); }
+
+/* Accent color for checkboxes (homepage decompiler selectors) */
+input[type="checkbox"],
+.decompiler_select {
+    accent-color: var(--brand-accent);
+}
+
+/* Optional: subtle focus ring using accent */
+:focus-visible {
+    outline: 2px solid var(--brand-accent-hover);
+    outline-offset: 2px;
+}
+
+/* Neon focus ring for form controls */
+input[type="text"],
+input[type="file"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="password"],
+select,
+textarea {
+    border-color: var(--brand-border-light);
+}
+
+input[type="text"]:focus-visible,
+input[type="file"]:focus-visible,
+input[type="email"]:focus-visible,
+input[type="number"]:focus-visible,
+input[type="search"]:focus-visible,
+input[type="password"]:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 224, 244, 0.25), 0 0 18px rgba(230, 47, 138, 0.35);
+    border-color: var(--brand-accent);
+}
+
+/* Dark mode variant with deeper glow */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --brand-surface: #0C0F1A;
+        --brand-text:    #E9EBF0;
+        --brand-on-dark: #F5F7FA;
+        --brand-divider: #13323B; /* muted teal divider */
+    }
+
+    html, body {
+        background:
+            radial-gradient(1200px 600px at 10% -10%, rgba(163, 60, 225, 0.25), transparent 60%),
+            radial-gradient(900px 450px at 95% 10%, rgba(230, 47, 138, 0.18), transparent 60%),
+            var(--brand-surface);
+        color: var(--brand-text);
+    }
+
+    .decompiler.with_line {
+        border-left: 1px solid var(--brand-divider);
+    }
+
+    .btn.btn-primary,
+    button.btn-primary,
+    a.btn.btn-primary {
+        color: #0C0F1A;
+        background: var(--brand-orange);
+        border-color: var(--brand-orange);
+    }
 }

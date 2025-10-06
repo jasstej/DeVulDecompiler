@@ -103,6 +103,21 @@ python scripts/dce.py start
 # UI now accessible on port 80/443 (via Traefik)
 ```
 
+### One-click local live (no domain)
+
+Bring it up and print your LAN URL so you can access from other devices on the same network:
+
+```zsh
+bash scripts/live_local.sh
+```
+
+- By default, starts explorer, db, memcached, and light runners (Snowman, RetDec).
+- To include angr as well:
+
+```zsh
+RUNNERS="angr snowman retdec" bash scripts/live_local.sh
+```
+
 
 ## Running in docker (production)
 

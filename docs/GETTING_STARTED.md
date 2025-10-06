@@ -117,3 +117,17 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml restart explorer
 - Explorer logs: `docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f explorer`
 - Runner logs: `docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f <runner>`
 - API endpoints: `/api/`, `/api/decompilers/`, `/api/binaries/`
+
+## One-click local live (access from same network)
+
+If you want the app reachable from other devices on your LAN without a domain, use:
+
+```zsh
+bash scripts/live_local.sh
+```
+
+This starts the dev stack and prints a URL like `http://192.168.1.42:8000` you can open from phones/laptops on the same Wi‑Fi. Set custom runners:
+
+```zsh
+RUNNERS="angr snowman retdec" bash scripts/live_local.sh
+```

@@ -185,6 +185,13 @@ class IndexView(APIView):
         for d in decompilers:
             decompilers_json[d.name] = model_to_dict(d)
 
+        # Ensure these decompilers are shown by default on the homepage
+        # (without requiring DB toggles). This only affects initial UI state.
+        DEFAULT_FEATURED = {"angr", "Snowman", "RetDec"}
+        for name in DEFAULT_FEATURED:
+            if name in decompilers_json:
+                decompilers_json[name]["featured"] = True
+
         featured_binaries = Binary.objects.filter(featured=True).order_by('featured_name')
         queue = DecompilationRequest.get_queue()
         show_banner = False

@@ -16,7 +16,7 @@ services:
           property: connectionString
       - key: MEMCACHED_HOST
         fromService:
-          type: pserv
+          type: memcached
           name: dce-memcached
           property: host
       - key: MEMCACHED_PORT
@@ -30,12 +30,19 @@ services:
       - key: DJANGO_DEBUG
         value: "False"
     healthCheckPath: /api/decompilers/
+<<<<<<< HEAD
+=======
+    regions:
+      - oregon
+    postdeploy:
+      - python manage.py migrate
+      - python manage.py collectstatic --noinput
+>>>>>>> parent of c016067 (render2)
 
   - type: pserv
     name: dce-memcached
     env: image
-    image:
-      url: memcached:1.6-alpine
+    image: memcached:1.6-alpine
     autoDeploy: true
     plan: starter
     startCommand: memcached -m 64 -p 11211 -u memcache -l 0.0.0.0
